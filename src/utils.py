@@ -37,3 +37,24 @@ def plot_numerical_data(dataframe):
         plt.tight_layout()
         # Show the plot
         plt.show()
+#---------------------------------------------------------------------------------------------------
+
+def plot_categorical_data(dataframe):
+    categorical_columns = dataframe.select_dtypes(include=['object', 'category']).columns
+    for column in categorical_columns:
+        fig, axs = plt.subplots(1, 2, figsize=(12, 5))
+        
+        # Conteo de cada categoría (barras)
+        sns.countplot(x=column, data=dataframe, ax=axs[0], palette='pastel')
+        axs[0].set_title(f'Conteo de categorías en {column}')
+        axs[0].set_xlabel('')
+        axs[0].set_ylabel('Frecuencia')
+        axs[0].tick_params(axis='x', rotation=45)
+        
+        # Gráfico de pastel (proporciones)
+        dataframe[column].value_counts().plot.pie(autopct='%1.1f%%', ax=axs[1], colors=sns.color_palette('pastel'))
+        axs[1].set_ylabel('')
+        axs[1].set_title(f'Proporción de categorías en {column}')
+        
+        plt.tight_layout()
+        plt.show()
