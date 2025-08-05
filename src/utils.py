@@ -7,6 +7,7 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.preprocessing import MinMaxScaler
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LogisticRegression
+from sklearn.linear_model import LinearRegression
 from sklearn.metrics import accuracy_score
 import math
 
@@ -111,7 +112,7 @@ def heatmap_correlation(dataframe):
     # Dibujar heatmap
     sns.heatmap(corr, mask=mask, annot=True, fmt=".2f", cmap='coolwarm', square=True, linewidths=0.5, cbar_kws={"shrink": .5})
 
-    plt.title('Mapaa de correlación')
+    plt.title('Mapa de correlación')
     plt.show()
 #---------------------------------------------------------------------------------------------------
 #ANALISIS VARIABLES CATEGORICAS
@@ -244,7 +245,7 @@ def process_dataframes_shapes(dataframe, target):
         'total_data_no_outliers_factorized_minmax': total_data_no_outliers_factorized_minmax.shape
     }
 #-------------------------------------------------------------------------
-# DATASET TRAIN/TEST SPLITS
+# DATASET TRAIN/TEST SPLITS   malooo
 
 def generate_train_test_splits(datasets_dict, target, test_size=0.2, random_state=42):
    
@@ -263,3 +264,21 @@ def generate_train_test_splits(datasets_dict, target, test_size=0.2, random_stat
 
     return splits
 #-----------------------------------------------------------------------------
+# DATASET TRAIN/ TEST FACTORIZADOS ESTANDARIZADOS malooo xxxxxxxxxxxxxxx
+
+def scale_dataset_standard(dataframe):
+    df_scaled = dataframe.copy()
+    scaler = StandardScaler()
+    df_scaled[df_scaled.columns] = scaler.fit_transform(df_scaled[df_scaled.columns])
+    return df_scaled   
+
+X_train_oulaiers_factorized_standard = scale_dataset_standard(X_train_oulaiers_factorized)
+x_test_oulaiers_factorized_standard = scale_dataset_standard(X_test_oulaiers_factorized)
+X_train_no_oulaiers_factorized_standard = scale_dataset_standard(X_train_no_outlaiers_factorized)
+x_test_no_oulaiers_factorized_standard = scale_dataset_standard(X_test_no_outlaiers_factorized)
+
+print("total_data_factorized_standard:")
+print(X_train_oulaiers_factorized_standard.head(), "\n")
+
+print("total_data_no_outliers_factorized_standard:")
+print(X_train_no_oulaiers_factorized_standard.head(), "\n")
